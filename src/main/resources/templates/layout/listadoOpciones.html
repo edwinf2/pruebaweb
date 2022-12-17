@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Listado Opciones</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <section th:fragment="listadoOpciones" id="usuarios">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>[[#{usuario.titulo.opciones}]]</h4>
+                            </div>
+                            <br/>
+                            <div th:if="${opciones != null and !opciones.empty}">
+                                <table class="table table-stryped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>[[#{opcion.etiqueta}]]</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="opcion : ${opciones}">
+                                            <td>
+                                                <a th:href="@{/opcionesMenu}" class="btn btn-light">[[${opcion.etiqueta}]]</a>
+                                            </td>                                            
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${opciones == null or opciones.empty}">
+                                <span th:text="#{opcion.lista-vaciaa}">Lista Vacia</span>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

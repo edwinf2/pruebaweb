@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Editar Opciones</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <section th:fragment="editarOpciones">
+            <form th:action="@{/guardar}" method="post" th:object="${usuario}" 
+                  class="was-validated">
+                <input type="hidden" name="idUsuario" th:field="*{idUsuario}" />
+                <div id="actions" class="py-4 mb-4 bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a th:href="@{/opcionesMenu}" class="btn btn-light btn-block">
+                                    <i class="fas fa-arrow-left"></i> [[#{accion.regresar}]]
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="details">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+
+
+                                    <div class="card-header">
+                                        <h4>[[#{accion.opciones}]]</h4>
+                                    </div>
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping"> [[#{usuario.nombre}]]: </span>
+                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" th:field="*{nombre}" disabled="true">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="modificarOpciones">Opciones No Asignadas</label>
+                                        <select class="form-select" id="modificarOpciones">
+                                            <option value="0">Seccionar</option>
+                                            <option th:each="opcion : ${opciones}" th:value="${opcion.etiqueta}" th:text="${opcion.etiqueta}"></option>
+                                        </select>
+                                        <br/>
+                                        <div class="col-md-3">
+                                            <button type="submit" class="btn btn-success btn-block">
+                                                <i class="fas fa-check"></i> [[#{accion.guardar}]]
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-stryped">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="opcion : ${opciones}">
+                                                    <td>
+                                                        <p class="btn btn-light">[[${opcion.etiqueta}]]</p>
+                                                    </td>
+                                                    <td>
+                                                        <button sec:authorize="hasRole('ROLE_ADMIN')" type="button" 
+                                                           class="btn btn btn-outline-secondary">
+                                                            <i class="fa-regular fa-trash"></i> [[#{accion.eliminar}]]
+                                                        </button>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
